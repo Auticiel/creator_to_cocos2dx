@@ -348,14 +348,6 @@ cocos2d::Node* CreatorReader::createTree(const buffers::NodeTree* tree) const
         case buffers::AnyNode_SpineSkeleton:
             node = createSpineSkeleton(static_cast<const buffers::SpineSkeleton*>(buffer));
             break;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        case buffers::AnyNode_VideoPlayer:
-            node = createVideoPlayer(static_cast<const buffers::VideoPlayer*>(buffer));
-            break;
-        case buffers::AnyNode_WebView:
-            node = createWebView(static_cast<const buffers::WebView*>(buffer));
-            break;
-#endif
         case buffers::AnyNode_Slider:
             node = createSlider(static_cast<const buffers::Slider*>(buffer));
             break;
@@ -977,51 +969,6 @@ void CreatorReader::parseButton(cocos2d::ui::Button* button, const buffers::Butt
         button->setPressedActionEnabled(true);
     }
 }
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-cocos2d::ui::VideoPlayer* CreatorReader::createVideoPlayer(const buffers::VideoPlayer* videoPlayerBuffer) const
-{
-    auto videoPlayer = cocos2d::ui::VideoPlayer::create();
-    parseVideoPlayer(videoPlayer, videoPlayerBuffer);
-    return videoPlayer;
-}
-
-void CreatorReader::parseVideoPlayer(cocos2d::ui::VideoPlayer* videoPlayer, const buffers::VideoPlayer* videoPlayerBuffer) const
-{
-    const auto& nodeBuffer = videoPlayerBuffer->node();
-    parseNode(videoPlayer, nodeBuffer);
-    
-    const auto& fullScreen = videoPlayerBuffer->fullScreen();
-    videoPlayer->setFullScreenEnabled(fullScreen);
-    
-    const auto& keepAspect = videoPlayerBuffer->keepAspect();
-    videoPlayer->setKeepAspectRatioEnabled(keepAspect);
-    
-    const auto& isLocal = videoPlayerBuffer->isLocal();
-    const auto& url = videoPlayerBuffer->url();
-    if (isLocal)
-        videoPlayer->setFileName(url->str());
-    else
-        videoPlayer->setURL(url->str());
-}
-
-cocos2d::ui::WebView* CreatorReader::createWebView(const buffers::WebView* webViewBuffer) const
-{
-    auto webView = cocos2d::ui::WebView::create();
-    parseWebView(webView, webViewBuffer);
-    return webView;
-}
-
-void CreatorReader::parseWebView(cocos2d::ui::WebView* webView, const buffers::WebView* webViewBuffer) const
-{
-    const auto& nodeBuffer = webViewBuffer->node();
-    parseNode(webView, nodeBuffer);
-    
-    const auto& url = webViewBuffer->url();
-    if (url)
-        webView->loadURL(url->str());
-}
-#endif
 
 cocos2d::ui::Slider* CreatorReader::createSlider(const buffers::Slider* sliderBuffer) const
 {

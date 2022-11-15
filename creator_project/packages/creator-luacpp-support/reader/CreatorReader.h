@@ -119,14 +119,6 @@ protected:
     spine::SkeletonAnimation* createSpineSkeleton(const buffers::SpineSkeleton* spineBuffer) const;
     void parseSpineSkeleton(spine::SkeletonAnimation* button, const buffers::SpineSkeleton* spineBuffer) const;
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    cocos2d::ui::VideoPlayer* createVideoPlayer(const buffers::VideoPlayer* videoPlayerBuffer) const;
-    void parseVideoPlayer(cocos2d::ui::VideoPlayer* videoPlayer, const buffers::VideoPlayer* videoPlayerBuffer) const;
-    
-    cocos2d::ui::WebView* createWebView(const buffers::WebView* webViewBuffer) const;
-    void parseWebView(cocos2d::ui::WebView* webView, const buffers::WebView* webViewBuffer) const;
-#endif
-    
     cocos2d::ui::Slider* createSlider(const buffers::Slider* sliderBuffer) const;
     void parseSlider(cocos2d::ui::Slider* slider, const buffers::Slider* sliderBuffer) const;
     
