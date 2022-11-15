@@ -87,6 +87,7 @@ class Node {
 
     constructor(data) {
         this._node_data = data;
+        Editor.log(`Constructing node with data: ${JSON.stringify(data)}`);
         this._children = [];
         this._jsonNode = {
             object: null,
