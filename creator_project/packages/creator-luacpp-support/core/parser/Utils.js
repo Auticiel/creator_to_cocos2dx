@@ -135,8 +135,8 @@ let get_font_path_by_uuid = function(uuid) {
             }
             else if (type === 'cc.TTFFont') {
                 state._uuid[uuid] = {
-                    fullpath: path.join(res_dir, contents_json._rawFiles[0]),
-                    relative_path: current_dir + '/' + contents_json._rawFiles[0]
+                    fullpath: path.join(res_dir, contents_json._native),
+                    relative_path: current_dir + '/' + contents_json._native
                 }
 
                 return state._uuid[uuid].relative_path;
