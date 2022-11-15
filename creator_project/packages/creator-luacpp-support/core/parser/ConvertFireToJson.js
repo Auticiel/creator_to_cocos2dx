@@ -72,9 +72,11 @@ class FireParser {
     to_json_setup_collision_matrix() {
         let collisionMatrix = Editor.remote.Profile.load('profile://project/project.json').data['collision-matrix'];
         this._json_output.collisionMatrix = [];
-        for (let i = 0, len = collisionMatrix.length; i < len; ++i) {
-            let collisionLine = {value: collisionMatrix[i]};
-            this._json_output.collisionMatrix.push(collisionLine);
+        if (collisionMatrix) {
+            for (let i = 0, len = collisionMatrix.length; i < len; ++i) {
+                let collisionLine = {value: collisionMatrix[i]};
+                this._json_output.collisionMatrix.push(collisionLine);
+            }
         }
     }
 
