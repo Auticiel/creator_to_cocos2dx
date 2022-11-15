@@ -170,27 +170,57 @@ class Node {
             }.bind(this));
     }
 
+    // Custom method, see details in parse_node_properties
+    add_properties_from_trs(data) {
+        if ('_trs' in data) {
+            let trs = data['_trs']['array'];
+            this._properties['position'] = {x:trs[0], y:trs[1]};
+            this._properties['scaleX'] = trs[7];
+            this._properties['scaleY'] = trs[7];
+        }
+    }
+
     parse_node_properties() {
         let data = this._node_data;
+        /* Commented out are all the things that are not present with Cocos Creator 2.x
+        Some might be in _trs (abbreviation of transforms?). _trs has 10 values:
+        - positionX
+        - positionY
+        - ??? Always 0
+        - ??? Always 0
+        - ??? Always 0
+        - something to do with rotation, 0 if rotation is 0, 0.7071 is rotation is 90°, probably 1 if rotation is 180°
+        - something to do with rotation, 1 if rotation is 0, 0.7071 is rotation is 90°, probably 0 if rotation is 180°
+        - scaleX
+        - scaleY
+        - ??? Always 1
+
+        Things that are probably here: 
+        - global/localZOrder (but how do you modify it in Cocos Creator?)
+        - rotationSkew  (but how do you modify it in Cocos Creator?)
+        */
         this.add_property_size('contentSize', '_contentSize', data);
         this.add_property_bool('enabled', '_active', data);
         this.add_property_str('name', '_name', data);
         this.add_property_vec2('anchorPoint', '_anchorPoint', data);
-        this.add_property_bool('cascadeOpacityEnabled', '_cascadeOpacityEnabled', data);
+        //this.add_property_bool('cascadeOpacityEnabled', '_cascadeOpacityEnabled', data);
         this.add_property_rgb('color', '_color', data);
-        this.add_property_int('globalZOrder', '_globalZOrder', data);
-        this.add_property_int('localZOrder', '_localZOrder', data);
+        //this.add_property_int('globalZOrder', '_globalZOrder', data);
+        //this.add_property_int('localZOrder', '_localZOrder', data);
         this.add_property_int('opacity', '_opacity', data);
-        this.add_property_bool('opacityModifyRGB', '_opacityModifyRGB', data);
-        this.add_property_vec2('position', '_position', data);
-        this.add_property_int('rotationSkewX', '_rotationX', data);
-        this.add_property_int('rotationSkewY', '_rotationY', data);
-        this.add_property_int('scaleX', '_scaleX', data);
-        this.add_property_int('scaleY', '_scaleY', data);
+        //this.add_property_bool('opacityModifyRGB', '_opacityModifyRGB', data);
+        //this.add_property_vec2('position', '_position', data);
+        //this.add_property_int('rotationSkewX', '_rotationX', data);
+        //this.add_property_int('rotationSkewY', '_rotationY', data);
+        //this.add_property_int('scaleX', '_scaleX', data);
+        //this.add_property_int('scaleY', '_scaleY', data);
         this.add_property_int('skewX', '_skewX', data);
         this.add_property_int('skewY', '_skewY', data);
-        this.add_property_int('tag', '_tag', data);
+        // This might be _id now?
+        //this.add_property_int('tag', '_tag', data);
         this.add_property_int('groupIndex', 'groupIndex', data);
+
+        this.add_properties_from_trs(data);
 
         this.parse_clip();
         this.parse_colliders();
