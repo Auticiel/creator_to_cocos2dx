@@ -177,7 +177,7 @@ class Node {
             let trs = data['_trs']['array'];
             this._properties['position'] = {x:trs[0], y:trs[1]};
             this._properties['scaleX'] = trs[7];
-            this._properties['scaleY'] = trs[7];
+            this._properties['scaleY'] = trs[8];
         }
     }
 
